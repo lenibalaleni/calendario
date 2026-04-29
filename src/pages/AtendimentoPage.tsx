@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Plus, Trash2, Users } from "lucide-react";
+import { Plus, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -19,10 +19,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useAtendimentos, criarAtendimento } from "@/lib/storage";
-import { MATERIAS_5_6, DIAS_SEMANA, type Materia, type Atendimento } from "@/lib/types";
+import { MATERIAS_5_6, DIAS_SEMANA, type Materia } from "@/lib/types";
 import { cn } from "@/lib/utils";
-
-const DIAS_SEMANA_CURTOS = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 const CORES_MATERIA: Record<string, string> = {
   "Português": "bg-red-100 text-red-700",
   "Matemática": "bg-blue-100 text-blue-700",
@@ -82,12 +80,10 @@ export default function AtendimentoPage() {
   return (
     <div className="flex flex-col gap-4">
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button className="w-full gap-2 bg-vintage-grape text-frosted-mint hover:bg-vintage-grape/90">
+        <DialogTrigger render={<Button className="w-full gap-2 bg-vintage-grape text-frosted-mint hover:bg-vintage-grape/90" />}>
             <Plus className="size-4" />
             Adicionar Atendimento
-          </Button>
-        </DialogTrigger>
+          </DialogTrigger>
         <DialogContent className="mx-4 max-h-[85vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Novo Atendimento ao Aluno</DialogTitle>

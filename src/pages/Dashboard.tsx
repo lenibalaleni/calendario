@@ -1,5 +1,5 @@
-import { usePerfil, useTestes, useAulas, useCompromissos, useAtendimentos } from "@/lib/storage";
-import { differenceInDays, isToday, parseISO, format, isAfter } from "date-fns";
+import { usePerfil, useTestes, useAulas, useAtendimentos } from "@/lib/storage";
+import { differenceInDays, parseISO, format, isAfter } from "date-fns";
 import { pt } from "date-fns/locale";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -32,18 +32,12 @@ function calcularPlanoEstudo(
   perfil: ReturnType<typeof usePerfil>[0],
   testes: ReturnType<typeof useTestes>[0],
   aulas: ReturnType<typeof useAulas>[0],
-  compromissos: ReturnType<typeof useCompromissos>[0]
 ): SessaoEstudo[] {
   const hoje = new Date();
   const diaSemana = hoje.getDay();
   const aulasHoje = aulas
     .filter((a) => a.diaSemana === diaSemana)
     .sort((a, b) => a.horaInicio.localeCompare(b.horaInicio));
-
-  const compromissosHoje = compromissos.filter((c) => {
-    const dataComp = parseISO(c.data);
-    return isToday(dataComp) || (c.recorrente === "semanal" && hoje.getDay() === parseISO(c.data).getDay());
-  });
 
   const horaFimAulas = aulasHoje.length > 0
     ? aulasHoje[aulasHoje.length - 1].horaFim
@@ -112,13 +106,12 @@ export default function Dashboard() {
   const [perfil] = usePerfil();
   const [testes] = useTestes();
   const [aulas] = useAulas();
-  const [compromissos] = useCompromissos();
   const [atendimentos] = useAtendimentos();
 
   const proximoTeste = getProximoTeste(testes);
   const aulasHoje = getAulasHoje(aulas);
   const atendimentosHoje = getAtendimentosHoje(atendimentos);
-  const planoEstudo = calcularPlanoEstudo(perfil, testes, aulas, compromissos);
+  const planoEstudo = calcularPlanoEstudo(perfil, testes, aulas);
   const hoje = new Date();
 
   if (!perfil.nome) {

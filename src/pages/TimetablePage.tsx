@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -19,7 +18,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useAulas, criarAula } from "@/lib/storage";
-import { MATERIAS_5_6, DIAS_SEMANA, type Materia, type Aula } from "@/lib/types";
+import { MATERIAS_5_6, DIAS_SEMANA, type Materia } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 const DIAS_SEMANA_CURTOS = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
@@ -40,11 +39,6 @@ const CORES_MATERIA: Record<string, string> = {
 
 function getCorMateria(materia: string) {
   return CORES_MATERIA[materia] ?? "bg-pale-slate text-vintage-grape";
-}
-
-interface Slot {
-  hora: string;
-  aulas: (Aula | null)[];
 }
 
 export default function TimetablePage() {
@@ -108,12 +102,10 @@ export default function TimetablePage() {
   return (
     <div className="flex flex-col gap-4">
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button className="w-full gap-2 bg-vintage-grape text-frosted-mint hover:bg-vintage-grape/90">
+        <DialogTrigger render={<Button className="w-full gap-2 bg-vintage-grape text-frosted-mint hover:bg-vintage-grape/90" />}>
             <Plus className="size-4" />
             Adicionar Aula
-          </Button>
-        </DialogTrigger>
+          </DialogTrigger>
         <DialogContent className="mx-4 max-h-[85vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Nova Aula</DialogTitle>

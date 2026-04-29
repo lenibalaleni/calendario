@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { format, parseISO, differenceInDays, isAfter } from "date-fns";
+import { format, parseISO, differenceInDays } from "date-fns";
 import { pt } from "date-fns/locale";
 import { Plus, Trash2, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -23,7 +23,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useTestes, criarTeste } from "@/lib/storage";
-import { MATERIAS_5_6, type Materia, type Teste } from "@/lib/types";
+import { MATERIAS_5_6, type Materia } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 export default function TestsPage() {
@@ -81,12 +81,10 @@ export default function TestsPage() {
   return (
     <div className="flex flex-col gap-4">
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button className="w-full gap-2 bg-vintage-grape text-frosted-mint hover:bg-vintage-grape/90">
+        <DialogTrigger render={<Button className="w-full gap-2 bg-vintage-grape text-frosted-mint hover:bg-vintage-grape/90" />}>
             <Plus className="size-4" />
             Adicionar Teste
-          </Button>
-        </DialogTrigger>
+          </DialogTrigger>
         <DialogContent className="mx-4 max-h-[85vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Novo Teste</DialogTitle>
