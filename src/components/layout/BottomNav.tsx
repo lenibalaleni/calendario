@@ -4,6 +4,7 @@ import {
   CalendarDays,
   ClipboardList,
   Clock,
+  Brain,
   Users,
   User,
 } from "lucide-react";
@@ -14,6 +15,7 @@ const NAV_ITEMS = [
   { to: "/calendario", icon: CalendarDays, label: "Calendário" },
   { to: "/testes", icon: ClipboardList, label: "Testes" },
   { to: "/horario", icon: Clock, label: "Horário" },
+  { to: "/estudar", icon: Brain, label: "Estudar" },
   { to: "/atendimento", icon: Users, label: "Atendimento" },
   { to: "/perfil", icon: User, label: "Perfil" },
 ];
@@ -34,14 +36,14 @@ export function BottomNav() {
               key={item.to}
               to={item.to}
               className={cn(
-                "flex flex-col items-center gap-0.5 px-2 py-1 text-[10px] font-medium transition-colors",
+                "flex flex-col items-center gap-0.5 px-1.5 py-1 text-[10px] font-medium transition-colors",
                 isActive
                   ? "text-vintage-grape"
                   : "text-lilac-ash hover:text-vintage-grape"
               )}
             >
               <item.icon className={cn("size-[18px]", isActive && "stroke-[2.5px]")} />
-              <span>{item.label}</span>
+              <span className="truncate">{item.label}</span>
             </NavLink>
           );
         })}

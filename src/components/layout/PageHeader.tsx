@@ -5,6 +5,7 @@ const TITULOS: Record<string, string> = {
   "/calendario": "Calendário",
   "/testes": "Testes",
   "/horario": "Horário",
+  "/estudar": "Estudar com IA",
   "/atendimento": "Atendimento ao Aluno",
   "/perfil": "Perfil",
 };
