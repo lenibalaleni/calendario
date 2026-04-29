@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { usePerfil } from "@/lib/storage";
 import type { Perfil } from "@/lib/types";
 import { Input } from "@/components/ui/input";
@@ -14,6 +15,7 @@ import { User, GraduationCap, Clock } from "lucide-react";
 
 export default function ProfilePage() {
   const [perfil, setPerfil] = usePerfil();
+  const [tempoInput, setTempoInput] = useState(String(perfil.tempoEstudoDiario));
 
   function updatePerfil(partial: Partial<Perfil>) {
     setPerfil((prev) => ({ ...prev, ...partial }));
@@ -69,15 +71,20 @@ export default function ProfilePage() {
         <CardContent className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <Label htmlFor="tempo">Tempo de estudo por dia (minutos)</Label>
-            <Input
+            <input
               id="tempo"
-              type="number"
-              min={15}
-              max={300}
-              value={perfil.tempoEstudoDiario}
-              onChange={(e) =>
-                updatePerfil({ tempoEstudoDiario: Number(e.target.value) || 60 })
-              }
+              type="text"
+              inputMode="numeric"
+              placeholder="60"
+              value={tempoInput}
+              onChange={(e) => setTempoInput(e.target.value.replace(/\D/g, ""))}
+              onBlur={() => {
+                const num = Number(tempoInput);
+                const val = num >= 15 ? Math.min(num, 300) : 60;
+                updatePerfil({ tempoEstudoDiario: val });
+                setTempoInput(String(val));
+              }}
+              className="flex h-8 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm transition-colors outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 placeholder:text-muted-foreground"
             />
           </div>
 
